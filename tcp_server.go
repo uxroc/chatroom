@@ -104,7 +104,8 @@ func (s *TCPServer) serve(client *client) {
 			if err == io.EOF {
 				continue
 			}
-			log.Fatalf("Error reading command: %v", err.Error())
+			log.Printf("Error reading command: %v, disconnecting client %v...", err.Error(), client.conn.RemoteAddr())
+			break
 		}
 
 		log.Printf("receving command: %v from client %v", cmd, client.conn.RemoteAddr())
