@@ -13,12 +13,12 @@ cli available
 
 #start a chat server
 
-./chatroom server :3333
+  ./chatroom server :3333
 
 
 #start a client
 
-./chatroom client :3333
+  ./chatroom client :3333
 
 
 #commands available
@@ -26,29 +26,29 @@ cli available
 
 #send message
 
-m hello world!
+  m hello world!
 
-msg verbose world!
+  msg verbose world!
 
 
 #set username
 
-n user1
+  n user1
 
-name verbose_user1
+  name verbose_user1
 
 
 #exit
 
-e
+  e
 
-exit
+  exit
 
 
 TODO
 
-decent client exit
+  decent client exit
 
-cli/web browser GUI
+  cli/web browser GUI
 
-https://scotch.io/bar-talk/build-a-realtime-chat-server-with-go-and-websockets
+  https://scotch.io/bar-talk/build-a-realtime-chat-server-with-go-and-websockets
