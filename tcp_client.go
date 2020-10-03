@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io"
 	"log"
 	"net"
 )
@@ -16,8 +15,8 @@ type TCPChatClient struct {
 }
 
 func (c *TCPChatClient) Close() {
-	c.conn.Close()
 	close(c.end)
+	c.conn.Close()
 }
 
 func (c *TCPChatClient) Incoming() chan MessageCommand {
@@ -59,6 +58,10 @@ func (c *TCPChatClient) SetName(name string) error {
 	return c.Send(&NameCommand{name})
 }
 
+func (c *TCPChatClient) Exit() error {
+	return c.Send(&ExitCommand{})
+}
+
 func (c *TCPChatClient) Start() {
 	log.Println("client Starts...")
 	for {
@@ -69,10 +72,13 @@ func (c *TCPChatClient) Start() {
 			cmd, err := c.cmdReader.Read()
 			//log.Println(cmd)
 
-			if err == io.EOF {
-				break
-			} else if err != nil {
-				log.Fatalf("Error reading command: %v", err.Error())
+			if err != nil {
+				select {
+				case <-c.end:
+					return
+				default:
+					log.Fatalf("Error reading command: %v", err.Error())
+				}
 			}
 
 			if cmd != nil {

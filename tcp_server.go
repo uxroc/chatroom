@@ -100,7 +100,10 @@ func (s *TCPServer) serve(client *client) {
 	serving := true
 	for serving {
 		cmd, err := cmdReader.Read()
-		if err != nil && err != io.EOF {
+		if err != nil {
+			if err == io.EOF {
+				continue
+			}
 			log.Fatalf("Error reading command: %v", err.Error())
 		}
 
@@ -123,10 +126,6 @@ func (s *TCPServer) serve(client *client) {
 			default:
 				log.Fatalf("Uknown command: %v", v)
 			}
-		}
-
-		if err == io.EOF {
-			break
 		}
 	}
 }

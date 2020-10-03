@@ -31,7 +31,7 @@ func StartNewClient(addr string) {
 	//message sender
 	scanner := bufio.NewScanner(os.Stdin)
 	running := true
-	for scanner.Scan() && running {
+	for running && scanner.Scan() {
 		args := strings.Split(scanner.Text(), " ")
 		switch strings.ToLower(args[0]) {
 		case "msg", "m":
@@ -43,6 +43,9 @@ func StartNewClient(addr string) {
 				log.Fatalf("Error naming user: %v", err.Error())
 			}
 		case "exit", "e":
+			if err := client.Exit(); err != nil {
+				log.Fatalf("Error exiting: %v", err.Error())
+			}
 			running = false
 		default:
 			log.Fatalf("Unknown command: %v", args[0])

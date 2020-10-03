@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 )
 
@@ -26,12 +25,9 @@ func NewCommandReader(reader io.Reader) *CommandReader {
 
 func (r *CommandReader) Read() (c Command, err error) {
 	var line string
-	//log.Printf("waiting for commands...")
 	if line, err = r.reader.ReadString('\n'); err != nil {
-		log.Fatalf("Error reading command: %v", err.Error())
 		return
 	}
-	//log.Printf("reading command: %v", line)
 	arr := strings.Split(line[:len(line) - 1], " ")
 	switch arr[0] {
 	case MESSAGE:

@@ -47,7 +47,7 @@ cli available
 
 TODO
 
-  decent client exit
+  decent client exit...DONE
 
   cli/web browser GUI
 

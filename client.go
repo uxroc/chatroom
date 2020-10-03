@@ -5,6 +5,7 @@ type ChatClient interface {
 	Send(cmd Command) error
 	SendMessage(msg string) error
 	SetName(name string) error
+	Exit() error
 	Start()
 	Close()
 	Incoming() chan MessageCommand

@@ -20,12 +20,10 @@ type MessageCommand struct {
 }
 
 type ExitCommand struct {
-	Name string
-
 }
 
 func (ec *ExitCommand) toStr() string {
-	return fmt.Sprintf("EXIT %v\n", ec.Name)
+	return fmt.Sprintf("EXIT\n")
 }
 
 func (sc *SendCommand) toStr() string {
