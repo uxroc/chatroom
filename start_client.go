@@ -48,7 +48,11 @@ func StartNewClient(addr string) {
 			}
 			running = false
 		default:
-			log.Fatalf("Unknown command: %v", args[0])
+			fmt.Printf("Error - Unknown command: %v\n\n", args[0])
+			fmt.Printf("Commands:\n")
+			fmt.Printf("	msg, m: send message\n")
+			fmt.Printf("	name, n: change user name\n")
+			fmt.Printf("	exit, e: leave chat\n")
 		}
 	}
 	client.Close()
