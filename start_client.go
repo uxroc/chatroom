@@ -12,7 +12,9 @@ import (
 func StartNewClient(addr string) {
 	var client ChatClient
 	client = NewClient()
-	client.Dial(addr)
+	if err := client.Dial(addr); err != nil {
+		log.Fatalf("Error dialing %v: %v", addr, err.Error())
+	}
 
 	go client.Start()
 
