@@ -16,7 +16,12 @@ func StartNewClient(addr string) {
 		log.Fatalf("Error dialing %v: %v", addr, err.Error())
 	}
 
-	go client.Start()
+	go func() {
+		err := client.Start()
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+	}()
 
 	//message receiver
 	go func(incoming chan MessageCommand) {

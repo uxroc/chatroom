@@ -7,20 +7,24 @@ import (
 	"log"
 )
 
-func initClient(addr string) ChatClient {
+func initClient(addr string) (ChatClient, <-chan error) {
 	var client ChatClient
 	client = NewClient()
 	if err := client.Dial(addr); err != nil {
 		log.Fatalf("Error dialing %v: %v", addr, err.Error())
 	}
 
-	go client.Start()
+	errChan := make(chan error)
+	go func(errChan chan error) {
+		errChan <- client.Start()
+	}(errChan)
 
-	return client
+	return client, errChan
 }
 
 func StartNewClientUI(addr string) {
-	client := initClient(addr)
+	client, errChan := initClient(addr)
+
 	login := views.NewLoginView()
 	chat := views.NewChatView()
 
@@ -53,6 +57,12 @@ func StartNewClientUI(addr string) {
 			}
 		}
 	}(client.Incoming())
+
+	go func(ui tui.UI, errChan <-chan error) {
+		e := <-errChan
+		ui.Quit()
+		log.Fatalf("Error: %s", e.Error())
+	}(ui, errChan)
 
 	if err := ui.Run(); err != nil {
 		log.Fatal(err.Error())

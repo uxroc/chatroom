@@ -1,6 +1,8 @@
 package main
 
 import (
+	"errors"
+	"fmt"
 	"log"
 	"net"
 )
@@ -62,22 +64,20 @@ func (c *TCPChatClient) Exit() error {
 	return c.Send(&ExitCommand{})
 }
 
-func (c *TCPChatClient) Start() {
-	//log.Println("client Starts...")
+func (c *TCPChatClient) Start() error {
 	for {
 		select {
 		case <-c.end:
-			return
+			return nil
 		default:
 			cmd, err := c.cmdReader.Read()
-			//log.Println(cmd)
 
 			if err != nil {
 				select {
 				case <-c.end:
-					return
+					return nil
 				default:
-					log.Fatalf("Error reading command: %v", err.Error())
+					return err
 				}
 			}
 
@@ -86,7 +86,7 @@ func (c *TCPChatClient) Start() {
 				case *MessageCommand:
 					c.incoming <- *v
 				default:
-					log.Fatalf("Unknown Command: %v", v)
+					return errors.New(fmt.Sprintf("Unknown command: %s", v.toStr()))
 				}
 			}
 		}
