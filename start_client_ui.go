@@ -2,6 +2,7 @@ package main
 
 import (
 	"./views"
+	"fmt"
 	"github.com/marcusolsson/tui-go"
 	"log"
 )
@@ -34,6 +35,7 @@ func StartNewClientUI(addr string) {
 
 	login.OnLogin(func(username string) {
 		client.SetName(username)
+		client.SendMessage(fmt.Sprintf("%s joined chat!", username))
 		ui.SetWidget(chat)
 		chat.Welcome(username)
 	})
