@@ -49,6 +49,6 @@ TODO
 
   decent client exit...DONE
 
-  cli/web browser GUI
+  cli/web browser GUI...DONE
 
   https://scotch.io/bar-talk/build-a-realtime-chat-server-with-go-and-websockets
