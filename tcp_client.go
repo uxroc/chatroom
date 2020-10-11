@@ -63,7 +63,7 @@ func (c *TCPChatClient) Exit() error {
 }
 
 func (c *TCPChatClient) Start() {
-	log.Println("client Starts...")
+	//log.Println("client Starts...")
 	for {
 		select {
 		case <-c.end:

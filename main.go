@@ -8,9 +8,12 @@ import (
 func main() {
 	log.SetOutput(os.Stdout)
 	args := os.Args[1:]
-	if args[0] == "server" {
+	switch args[0] {
+	case "server":
 		StartNewServer(args[1])
-	} else {
+	case "client":
+		StartNewClientUI(args[1])
+	case "raw-client":
 		StartNewClient(args[1])
 	}
 }
