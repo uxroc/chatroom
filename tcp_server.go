@@ -19,7 +19,7 @@ type TCPServer struct {
 	mutex *sync.Mutex
 }
 
-func NewServer() *TCPServer {
+func NewTCPServer() *TCPServer {
 	return &TCPServer{
 		mutex: &sync.Mutex{},
 	}

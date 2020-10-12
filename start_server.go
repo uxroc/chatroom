@@ -4,7 +4,7 @@ import "log"
 
 func StartNewServer(addr string) {
 	var server ChatServer
-	server = NewServer()
+	server = NewTCPServer()
 	err := server.Listen(addr)
 	if err != nil {
 		log.Fatalf("Error listening to %v: %v", addr, err.Error())
